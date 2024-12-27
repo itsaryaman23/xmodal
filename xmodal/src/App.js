@@ -94,7 +94,7 @@ function App() {
               <label>Email Address:</label>
               <input
                 id="email"
-                type="email"
+                type="text"
                 value={formData.email}
                 onChange={handleChange}
               />
