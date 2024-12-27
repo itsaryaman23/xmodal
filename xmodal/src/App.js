@@ -18,22 +18,44 @@ function App() {
   const validateForm = () => {
     const { username, email, phone, dob } = formData;
 
+    // Validate Username
     if (!username) {
       alert("Please fill in the username.");
       return false;
     }
+
+    // Validate Email
     if (!email || !email.includes("@")) {
       alert("Invalid email. Please check your email address.");
       return false;
     }
-    if (!phone || phone.length !== 10 || isNaN(phone)) {
+
+    // Validate Phone Number
+    if (!phone || !/^\d{10}$/.test(phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
       return false;
     }
-    if (!dob || new Date(dob) > new Date()) {
+
+    // Validate Date of Birth
+    if (!dob) {
+      alert("Please fill in your date of birth.");
+      return false;
+    }
+    const dobDate = new Date(dob);
+    const today = new Date();
+    const age = today.getFullYear() - dobDate.getFullYear();
+    const isFutureDate = dobDate > today;
+    const isUnderage = age < 13 || (age === 13 && dobDate > new Date(today.setFullYear(today.getFullYear() - 13)));
+
+    if (isFutureDate) {
       alert("Invalid date of birth. Date of birth cannot be in the future.");
       return false;
     }
+    if (isUnderage) {
+      alert("You must be at least 13 years old to register.");
+      return false;
+    }
+
     return true;
   };
 
